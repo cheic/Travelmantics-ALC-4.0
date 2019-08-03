@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 public class ListActivity extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class ListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_activity_menu, menu);
         MenuItem insert = menu.findItem(R.id.insert_menu);
-        if (FirebaseUtil.isAdmin == true) {
+        if (FirebaseUtil.isAdmin) {
 
             insert.setVisible(true);
 
@@ -70,11 +71,6 @@ public class ListActivity extends AppCompatActivity {
         FirebaseUtil.detachListener();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 
     @Override
     protected void onPause() {
@@ -98,5 +94,10 @@ public class ListActivity extends AppCompatActivity {
 
     public void showMenu() {
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

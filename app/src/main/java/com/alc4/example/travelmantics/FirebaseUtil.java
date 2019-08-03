@@ -1,7 +1,5 @@
 package com.alc4.example.travelmantics;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -12,6 +10,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +28,8 @@ public class FirebaseUtil {
     public static boolean isAdmin;
     private static FirebaseUtil firebaseUtil;
     private static ListActivity caller;
+    public static FirebaseStorage mFirebaseStorage;
+    public static StorageReference mStorageref;
 
     private FirebaseUtil() {
     }
@@ -52,10 +54,11 @@ public class FirebaseUtil {
                         checkAdmin(userId);
 
                     }
-                    Toast.makeText(callerActivity.getBaseContext(), "Welcome Back", Toast.LENGTH_LONG).show();
-
+                    //Toast.makeText(callerActivity.getBaseContext(), "Welcome Back", Toast.LENGTH_LONG).show();
                 }
             };
+
+            connectStorage();
 
         }
         mDeals = new ArrayList<>();
@@ -94,6 +97,7 @@ public class FirebaseUtil {
 
             }
         };
+        reference.addChildEventListener(childEventListener);
     }
 
     private static void signIn() {
@@ -121,6 +125,13 @@ public class FirebaseUtil {
     public static void detachListener() {
 
         mFirebaseAuth.removeAuthStateListener(mAuthListener);
+
+    }
+
+    public static void connectStorage() {
+
+        mFirebaseStorage = FirebaseStorage.getInstance();
+        mStorageref = mFirebaseStorage.getReference().child("deals_pictures");
 
     }
 
